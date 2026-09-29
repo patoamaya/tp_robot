@@ -9,7 +9,7 @@
 #    2. Espera a que aparezca la ventana con el robot
 #    3. Recien ahi ejecuta este archivo
 #
-#  Nombre y apellido:  .....................................
+#  Nombre y apellido:  Amaya Patricio
 #  Comision:           .....................................
 # =====================================================================
 
@@ -22,6 +22,7 @@ from misiones import MISION_BASICA, MISION_CON_ERRORES, MISION_CUADRADO
 #  PARTE 1 - Validar un comando
 # =====================================================================
 def comando_es_valido(comando):
+   
     """Decide si un comando se puede ejecutar. Devuelve True o False.
 
     Un comando es una tupla. El primer elemento dice que hacer:
@@ -39,7 +40,20 @@ def comando_es_valido(comando):
       - que velocidad y tiempo sean numeros de verdad, no textos
       - que el tiempo no sea negativo
     """
-    # TU CODIGO ACA
+    if len(comando) == 0:
+        return False
+    if 'avanzar' not in comando and 'girar' not in comando and 'detenerse' not in comando and 'saludar' not in comando:
+        return False
+    if ('avanzar' in comando or 'girar' in comando) and len(comando) != 3:
+        return False
+    if ('detenerse' in comando or 'saludar' in comando) and len(comando) != 1:
+        return False 
+    if len(comando) == 3:
+        velocidad, tiempo = comando[1], comando[2]
+        if type(velocidad) not in(int, float) or type(tiempo) not in(int, float):
+            return False
+        if tiempo < 0:
+            return False
     pass
 
 

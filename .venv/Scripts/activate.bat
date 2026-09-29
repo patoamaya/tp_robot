@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\JPy\Documents\UADE\Unitree\Testing_environment\.venv
+set VIRTUAL_ENV=C:\Users\Patricio\Desktop\tp_robot-1\.venv
 
 if not defined PROMPT set PROMPT=$P$G
 
