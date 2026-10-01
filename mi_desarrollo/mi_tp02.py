@@ -55,6 +55,7 @@ def comando_es_valido(comando):
         if tiempo < 0:
             return False
     pass
+    return True
 
 
 # =====================================================================
@@ -75,6 +76,25 @@ def ejecutar_comando(robot, comando):
     Eso llega como un ErrorDeSeguridad y conviene atraparlo.
     """
     # TU CODIGO ACA
+    accion = comando[0]
+
+    try:
+        if accion == 'avanzar':
+            velocidad, tiempo = comando[1], comando[2]
+            robot.avanzar(velocidad, tiempo)
+            return'Avanza', velocidad, 'por', tiempo, 'segundos'
+        elif accion == 'girar':
+            velocidad, tiempo = comando[1], comando[2]
+            robot.girar(velocidad, tiempo)
+            return'Gira', velocidad, 'por', tiempo, 'segundos'
+        elif accion == 'detenerse':
+            robot.detenerse()
+            return 'Detenido'
+        elif accion == 'saludar':
+            robot.saludar()
+            return 'Saludar'
+    except ErrorDeSeguridad as e:
+        return 'Error', e
     pass
 
 
@@ -92,6 +112,12 @@ def ejecutar_mision(robot, mision, historial):
     Un comando invalido NO tiene que cortar la mision.
     """
     # TU CODIGO ACA
+    for comando in mision:
+        if not comando_es_valido(comando):
+            historial.append(comando, 'Error')
+        else:
+            resultado = ejecutar_comando(robot, comando)
+            historial.append(resultado)
     pass
 
 
@@ -107,6 +133,17 @@ def generar_reporte(historial):
       - cual fue el motivo de cada rechazo
     """
     # TU CODIGO ACA
+    aprobados = 0
+    rechazados = 0
+    print('Historial:')
+    for registro in historial:
+        if 'Error' in registro:
+            rechazados +=1
+            print("Rechazado: ", registro)
+        else:
+            aprobados +=1
+    print("Total de aprobados: ", aprobados)
+    print("Total de rechazados: ", rechazados)
     pass
 
 
