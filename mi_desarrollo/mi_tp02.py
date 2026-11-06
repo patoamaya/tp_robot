@@ -15,7 +15,7 @@
 
 from robot import ErrorDeSeguridad, Robot
 
-from misiones import MISION_BASICA, MISION_CON_ERRORES, MISION_CUADRADO
+from misiones import MISION_BASICA, MISION_CON_ERRORES, MISION_CUADRADO, MISION_LARGA
 
 
 # =====================================================================
@@ -153,19 +153,31 @@ def generar_reporte(historial):
 def main():
     robot = Robot()
     robot.conectar()
-
     historial = []
 
+    print("--- CONTROLADOR DE MISIONES ---")
+    print("1. Misión Básica")
+    print("2. Cuadrado")
+    print("3. Misión con Errores")
+    print("4. Misión Larga")
+    
+    opcion = input("Selecciona una opción (1-4): ")
+
+    opciones = {
+        "1": MISION_BASICA,
+        "2": MISION_CUADRADO,
+        "3": MISION_CON_ERRORES,
+        "4": MISION_LARGA
+    }
+
+    mision_elegida = opciones.get(opcion, MISION_BASICA)
+
     try:
-        # Empeza probando con MISION_BASICA.
-        # Cuando funcione, proba con MISION_CON_ERRORES: esa tiene
-        # comandos invalidos a proposito.
-        ejecutar_mision(robot, MISION_BASICA, historial)
+        ejecutar_mision(robot, mision_elegida, historial)
         generar_reporte(historial)
     finally:
         robot.detenerse()
         robot.desconectar()
-
 
 if __name__ == "__main__":
     main()
